@@ -2,17 +2,19 @@ package com.pluralsight;
 
 public class Vehicle {
     private int vin;
-    private double price;
-    private String makeModel;
     private String year;
+    private String make;
+    private String model;
+    private String type;
     private String color;
     private double mileage;
-    private String type;
+    private double price;
 
-    public Vehicle(int vin, String year, String makeModel, String type, String color, double mileage, double price) {
+    public Vehicle(int vin, String year, String make, String model, String type, String color, double mileage, double price) {
         this.vin = vin;
         this.year = year;
-        this.makeModel = makeModel;
+        this.make = make;
+        this.model = model;
         this.type = type;
         this.color = color;
         this.mileage = mileage;
@@ -27,14 +29,22 @@ public class Vehicle {
         this.price = price;
     }
 
-    public String getMakeModel() {
-        return makeModel;
+    public String getMake() {
+        return make;
     }
 
-    public void setMakeModel(String makeModel) {
-        this.makeModel = makeModel;
+    public void setMake(String make) {
+        this.make = make;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.make = model;
+    }
+    
     public String getYear() {
         return year;
     }
@@ -69,6 +79,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return String.format("%.2f, %s, %f, %s, %d, %s", price, makeModel, year, color, mileage, type);
+        return String.format("%.2f, %s, %s, %s, %s, %f, %s", price, make, model, year, color, mileage, type);
     }
 }
