@@ -1,8 +1,5 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +7,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phoneNumber;
-    private List<Vehicle> inventory;
+    private final List<Vehicle> inventory;
     
     // the constructor method of Dealership creates a new ArrayList of type Vehicle
     // which will store the vehicles in the dealership
@@ -70,7 +67,7 @@ public class Dealership {
     }
     
     public List<Vehicle> getAllVehicles(){
-        return null;
+        return inventory;
     }
     
     public void addVehicle(Vehicle vehicle){

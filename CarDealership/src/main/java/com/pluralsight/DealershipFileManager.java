@@ -7,12 +7,10 @@ import java.io.IOException;
 public class DealershipFileManager {
     public static String filePath = "inventory.csv";
     
-    public static Dealership getDealership() {
+    public Dealership getDealership() {
         // get dealership details from csv file
-        String details;
-        int lineNumber = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            details = reader.readLine();
+            String details = reader.readLine();
 
             // after reading a line from the file, we want to parse the information
             // this information will be saved to the new Dealership object
@@ -24,10 +22,14 @@ public class DealershipFileManager {
 
             Dealership dealership = new Dealership(dealershipName, dealershipAddress, dealershipPhoneNumber);
 
-            // details != null is always true so use the true boolean and a break statement to loop
-            while (true) {
-                String[] vehicleDetails = details.split("\\|");
-
+            String vehicleLines;
+            while ((vehicleLines = reader.readLine()) != null) {
+                // System.out.println("Reading line: " + vehicleLines);
+                // helps determine what the reader.readLine() variable is reading
+                
+                String[] vehicleDetails = vehicleLines.split("\\|");
+                // System.out.println("Split into " + vehicleDetails.length + " parts");
+                // determines what the String[] is being passed and determines how many splits of data
                 if (vehicleDetails.length != 8) {
                     System.out.println("There are some vehicle details missing!");
                     continue;
@@ -36,7 +38,6 @@ public class DealershipFileManager {
                 try {
                     Vehicle vehicle = getVehicle(vehicleDetails);
                     dealership.addVehicle(vehicle);
-                    break;
                 } catch (Exception e) {
                     System.out.println("There was an error parsing vehicle details!");
                     throw new RuntimeException(e);
@@ -44,7 +45,6 @@ public class DealershipFileManager {
             }
             // after parsing the details, we return the new Dealership object
             return dealership;
-            
         } catch (IOException e) {
             System.out.println("Could not read from file!");
             throw new RuntimeException(e);
