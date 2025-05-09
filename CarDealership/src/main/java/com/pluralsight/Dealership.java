@@ -7,17 +7,83 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealership {
-    private List<Vehicle> vehicles;
+    private String name;
+    private String address;
+    private String phoneNumber;
+    private static List<Vehicle> inventory;
     public static String filePath = "inventory.csv";
-    public static List<Vehicle> car = new ArrayList<>();
+//    public static List<Vehicle> car = new ArrayList<>();
 
+    
     // the constructor method of Dealership creates a new ArrayList of Vehicle
     // which will store the vehicles in the dealership
     public Dealership() {
-        vehicles = new ArrayList<Vehicle>() {
-        };
+        this.name = "";
+        this.address = "";
+        this.phoneNumber = "";
+        this.inventory = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
+    public static List<Vehicle> getVehiclesByPrice(double min, double max){
+        return null;
+    }
+    
+    public static List<Vehicle> getVehiclesByMakeModel(String makeModel){
+        return null;
+    }
+    
+    public static List<Vehicle> getVehiclesByYear(double min, double max){
+        return null;
+    }
+    
+    public static List<Vehicle> getVehiclesByColor(String color){
+        return null;
+    }
+    
+    public static List<Vehicle> getVehiclesByMileage(){
+        return null;
+    }
+    
+    public static List<Vehicle> getVehiclesByType(String vehicleType){
+        return null;
+    }
+    
+    public static List<Vehicle> getAllVehicles(){
+        return null;
+    }
+    
+    public static List<Vehicle> addVehicle(Vehicle vehicle){
+        return null;
+    }
+    
+    public static List<Vehicle> removeVehicle(Vehicle vehicle){
+        return null;
+    }
+
     public static final List<Vehicle> inventoryList = getInventoryListFromCSV();
     
     // this method creates an array list of carDetails that will be parsed from the csv file
