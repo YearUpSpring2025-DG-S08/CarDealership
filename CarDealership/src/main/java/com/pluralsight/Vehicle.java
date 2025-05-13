@@ -21,6 +21,14 @@ public class Vehicle {
         this.price = price;
     }
 
+    public int getVin() {
+        return vin;
+    }
+
+    public void setVin(int vin) {
+        this.vin = vin;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -77,8 +85,12 @@ public class Vehicle {
         this.type = type;
     }
 
+    // create a formatted print to console method for easier readability for the user
+
     @Override
     public String toString() {
-        return String.format("%d|%s|%s|%s|%s|%s|%.0f|%.0f", vin, year, make, model, type, color, mileage, price);
+        
+        
+        return String.format("%d|%s|%s|%s|%s|%s|%.0f|$%.0f", vin, year, make, model, type, color, mileage, price);
     }
 }

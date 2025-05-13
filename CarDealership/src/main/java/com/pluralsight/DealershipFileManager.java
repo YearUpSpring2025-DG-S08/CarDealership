@@ -1,8 +1,7 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 public class DealershipFileManager {
     public static String filePath = "inventory.csv";
@@ -22,13 +21,15 @@ public class DealershipFileManager {
 
             Dealership dealership = new Dealership(dealershipName, dealershipAddress, dealershipPhoneNumber);
 
+//            reader.readLine(); // skips vehicle CSV header line
+            
             String vehicleLines;
             while ((vehicleLines = reader.readLine()) != null) {
-                // System.out.println("Reading line: " + vehicleLines);
-                // helps determine what the reader.readLine() variable is reading
+//                 System.out.println("Reading line: " + vehicleLines);
+//                 helps determine what the reader.readLine() variable is reading
                 
                 String[] vehicleDetails = vehicleLines.split("\\|");
-                // System.out.println("Split into " + vehicleDetails.length + " parts");
+//                 System.out.println("Split into " + vehicleDetails.length + " parts");
                 // determines what the String[] is being passed and determines how many splits of data
                 if (vehicleDetails.length != 8) {
                     System.out.println("There are some vehicle details missing!");
@@ -36,15 +37,16 @@ public class DealershipFileManager {
                 }
 
                 try {
-                    Vehicle vehicle = getVehicle(vehicleDetails);
-                    dealership.addVehicle(vehicle);
+                    Vehicle newVehicle = getVehicle(vehicleDetails);
+                    dealership.addVehicle(newVehicle);
+                    
                 } catch (Exception e) {
-                    System.out.println("There was an error parsing vehicle details!");
-                    throw new RuntimeException(e);
+                    System.out.println("Could not add vehicles to inventory");
                 }
             }
             // after parsing the details, we return the new Dealership object
             return dealership;
+            
         } catch (IOException e) {
             System.out.println("Could not read from file!");
             throw new RuntimeException(e);
@@ -53,21 +55,53 @@ public class DealershipFileManager {
 
     // extrapolated a getVehicle method to parse the details and return a Vehicle object
     private static Vehicle getVehicle(String[] vehicleDetails) {
-        int vin = Integer.parseInt(vehicleDetails[0]);
-        String year = vehicleDetails[1];
-        String make = vehicleDetails[2];
-        String model = vehicleDetails[3];
-        String type = vehicleDetails[4];
-        String color = vehicleDetails[5];
-        double mileage = Double.parseDouble(vehicleDetails[6]);
-        double price = Double.parseDouble(vehicleDetails[7]);
-
-        return new Vehicle(vin, year, make, model, type, color, mileage, price);
+        try {
+            int vin = Integer.parseInt(vehicleDetails[0]);
+            String year = vehicleDetails[1];
+            String make = vehicleDetails[2];
+            String model = vehicleDetails[3];
+            String type = vehicleDetails[4];
+            String color = vehicleDetails[5];
+            double mileage = Double.parseDouble(vehicleDetails[6]);
+            double price = Double.parseDouble(vehicleDetails[7]);
+            
+            return new Vehicle(vin, year, make, model, type, color, mileage, price);
+        } catch (Exception e) {
+            System.out.println("Error parsing vehicle details");
+            return null;
+        }
     }
     
-    private static void saveDealership(Dealership dealership){
-      // will add code to save a dealership 
-        // this method will overwrite the inventory.csv file
-        // with the provided dealership information and inventory list
+    public void saveDealership(Dealership dealership){
+    // for every add or removal of a vehicle
+    // this method will be called to save this new information to the csv file
+        // need this line of code to write this information into the csv file
+        // this would include the information added or removed from the corresponding methods 
+        List<Vehicle> inventory = dealership.getAllVehicles();
+        // logic: because the addVehicle() and the removeVehicle() change the 
+
+
+        try(PrintWriter writer = new PrintWriter(new FileWriter(filePath, false))){
+            // creates the dealership information line
+            writer.printf("%s|%s|%s", dealership.getName(), dealership.getAddress(), dealership.getPhoneNumber());
+            
+            for(Vehicle v: inventory) {
+                writer.printf("\n%d|%s|%s|%s|%s|%s|%.0f|%.0f"
+                        , v.getVin()
+                        , v.getYear()
+                        , v.getMake()
+                        , v.getModel()
+                        , v.getType()
+                        , v.getColor()
+                        , v.getMileage()
+                        , v.getPrice());
+            }
+        } catch(IOException e){
+            System.out.println("There was an error saving information to file");
+        }
+    }
+    
+    public void loadDealership(){
+        
     }
 }

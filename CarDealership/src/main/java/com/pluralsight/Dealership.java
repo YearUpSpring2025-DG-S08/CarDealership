@@ -7,15 +7,16 @@ public class Dealership {
     private String name;
     private String address;
     private String phoneNumber;
-    private final List<Vehicle> inventory;
-    
+    private final DealershipFileManager fileManager = new DealershipFileManager();
+    public List<Vehicle> inventory = new ArrayList<>();
+    // this variable is currently empty so writing to the file is not working
+
     // the constructor method of Dealership creates a new ArrayList of type Vehicle
     // which will store the vehicles in the dealership
     public Dealership(String name, String address, String phoneNumber) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.inventory = new ArrayList<>();
     }
 
     public String getName() {
@@ -42,11 +43,19 @@ public class Dealership {
         this.phoneNumber = phoneNumber;
     }
     
+    public List<Vehicle> getVehicleByVIN(int vin){
+        return null;
+    }
+    
     public List<Vehicle> getVehiclesByPrice(double min, double max){
         return null;
     }
     
-    public List<Vehicle> getVehiclesByMakeModel(String makeModel){
+    public List<Vehicle> getVehiclesByMake(String make){
+        return null;
+    }
+    
+    public List<Vehicle> getVehicleByModel(String model){
         return null;
     }
     
@@ -58,7 +67,7 @@ public class Dealership {
         return null;
     }
     
-    public List<Vehicle> getVehiclesByMileage(){
+    public List<Vehicle> getVehiclesByMileage(double min, double max){
         return null;
     }
     
@@ -70,13 +79,16 @@ public class Dealership {
         return inventory;
     }
     
-    public void addVehicle(Vehicle vehicle){
-        //add this vehicle to the inventory of this dealership.
+    public void addVehicle(Vehicle vehicle) {
+        //add this vehicle to the inventory of this dealership
         inventory.add(vehicle);
+        fileManager.saveDealership(this);
     }
     
-    public List<Vehicle> removeVehicle(Vehicle vehicle){
-        return null;
-    }
     
+    public void removeVehicle(Vehicle vehicle){
+        // remove this vehicle from the inventory of the dealership
+        inventory.remove(vehicle);
+        fileManager.saveDealership(this.fileManager.getDealership());
+    }
 }
