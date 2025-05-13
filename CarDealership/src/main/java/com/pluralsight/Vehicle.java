@@ -2,7 +2,7 @@ package com.pluralsight;
 
 public class Vehicle {
     private int vin;
-    private String year;
+    private int year;
     private String make;
     private String model;
     private String type;
@@ -10,7 +10,8 @@ public class Vehicle {
     private double mileage;
     private double price;
 
-    public Vehicle(int vin, String year, String make, String model, String type, String color, double mileage, double price) {
+    public Vehicle(int vin, int year, String make, String model, String type, String color, double mileage,
+                   double price) {
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -53,11 +54,11 @@ public class Vehicle {
         this.make = model;
     }
     
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -89,8 +90,7 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        
-        
-        return String.format("%d|%s|%s|%s|%s|%s|%.0f|$%.0f", vin, year, make, model, type, color, mileage, price);
+        return String.format("%d|%s|%s|%s|%s|%s|%.0f|$%.0f"
+                , vin, year, make, model, type, color, mileage, price);
     }
 }

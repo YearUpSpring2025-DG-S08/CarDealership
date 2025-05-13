@@ -54,10 +54,10 @@ public class DealershipFileManager {
     }
 
     // extrapolated a getVehicle method to parse the details and return a Vehicle object
-    private static Vehicle getVehicle(String[] vehicleDetails) {
+    public static Vehicle getVehicle(String[] vehicleDetails) {
         try {
             int vin = Integer.parseInt(vehicleDetails[0]);
-            String year = vehicleDetails[1];
+            int year = Integer.parseInt(vehicleDetails[1]);
             String make = vehicleDetails[2];
             String model = vehicleDetails[3];
             String type = vehicleDetails[4];

@@ -5,6 +5,8 @@ public class Main {
 
         UserInterface user = new UserInterface();
         user.display();
-        user.processGetAllVehiclesRequest();
+//        user.processGetAllVehiclesRequest();
+    
+        // format outputs to user for better readability
     }
 }

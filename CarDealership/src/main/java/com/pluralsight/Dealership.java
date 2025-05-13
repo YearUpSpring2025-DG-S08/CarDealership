@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.awt.image.FilteredImageSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,8 @@ public class Dealership {
     private String phoneNumber;
     private final DealershipFileManager fileManager = new DealershipFileManager();
     public List<Vehicle> inventory = new ArrayList<>();
-    // this variable is currently empty so writing to the file is not working
-
-    // the constructor method of Dealership creates a new ArrayList of type Vehicle
-    // which will store the vehicles in the dealership
+    
+    
     public Dealership(String name, String address, String phoneNumber) {
         this.name = name;
         this.address = address;
@@ -44,35 +43,91 @@ public class Dealership {
     }
     
     public List<Vehicle> getVehicleByVIN(int vin){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getVin() == vin){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByPrice(double min, double max){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getPrice() >= min && vehicle.getPrice() <= max){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByMake(String make){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getMake().equalsIgnoreCase(make)){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
-    public List<Vehicle> getVehicleByModel(String model){
-        return null;
+    public List<Vehicle> getVehiclesByModel(String model){
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getModel().equalsIgnoreCase(model)){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByYear(double min, double max){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getPrice() >= min && vehicle.getPrice() <= max){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByColor(String color){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getColor().equalsIgnoreCase(color)){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByMileage(double min, double max){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getMileage() >= min && vehicle.getMileage() <= max){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getVehiclesByType(String vehicleType){
-        return null;
+        List<Vehicle> filteredVehicles = new ArrayList<>();
+        
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getType().equalsIgnoreCase(vehicleType)){
+                filteredVehicles.add(vehicle);
+            }
+        }
+        return filteredVehicles;
     }
     
     public List<Vehicle> getAllVehicles(){
@@ -89,6 +144,6 @@ public class Dealership {
     public void removeVehicle(Vehicle vehicle){
         // remove this vehicle from the inventory of the dealership
         inventory.remove(vehicle);
-        fileManager.saveDealership(this.fileManager.getDealership());
+        fileManager.saveDealership(this);
     }
 }

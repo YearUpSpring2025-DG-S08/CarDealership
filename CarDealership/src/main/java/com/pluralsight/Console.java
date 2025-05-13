@@ -40,7 +40,7 @@ public class Console {
 
     public String promptForString(String prompt) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.isEmpty()) {
