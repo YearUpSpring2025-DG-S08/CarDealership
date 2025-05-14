@@ -132,45 +132,14 @@ public class DealershipFileManager {
             return;
         }
         
-        String[] headers = { "VIN", "Year", "Make", "Model", "Type", "Color", "Mileage", "Price" };
-        int[] columnWidths = { 8, 6, 12, 14, 12, 10, 10, 12 };
+        // Print styled header
+        System.out.println(StyledUI.FormattedTextHeader());
         
-        StringBuilder border = new StringBuilder();
-        for (int width : columnWidths) {
-            border.append("+").append("-".repeat(width));
-        }
-        border.append("+");
-        
-        // Print header
-        System.out.println(border);
-        System.out.print("|");
-        for (int i = 0; i < headers.length; i++) {
-            System.out.printf(" %-" + (columnWidths[i] - 2) + "s |", headers[i]);
-        }
-        System.out.println();
-        System.out.println(border);
-        
-        // Print vehicle rows
+        // Print each vehicle using the Vehicle's toFormattedRow() method
         for (Vehicle v : vehicles) {
-            System.out.printf("| %-" + (columnWidths[0] - 2) + "d ", v.getVin());
-            System.out.printf("| %-" + (columnWidths[1] - 2) + "d ", v.getYear());
-            System.out.printf("| %-" + (columnWidths[2] - 2) + "s ", v.getMake());
-            System.out.printf("| %-" + (columnWidths[3] - 2) + "s ", v.getModel());
-            System.out.printf("| %-" + (columnWidths[4] - 2) + "s ", v.getType());
-            System.out.printf("| %-" + (columnWidths[5] - 2) + "s ", v.getColor());
-//            System.out.printf("| %-" + (columnWidths[6] - 2) + ".1f ", v.getMileage());
-//            System.out.printf("| $%-" + (columnWidths[7] - 3) + ".2f |\n", v.getPrice());
-            
-            
-            // Format mileage as integer with commas
-            String mileageFormatted = String.format("%,d", (int) v.getMileage());
-            System.out.printf("| %" + (columnWidths[6] - 2) + "s ", mileageFormatted);
-            
-            // Format price as $#,###.##
-            String priceFormatted = String.format("$%,.2f", v.getPrice());
-            System.out.printf("| %" + (columnWidths[7] - 2) + "s |\n", priceFormatted);
+            System.out.println(v.toFormattedRow());
         }
         
-        System.out.println(border);
+        System.out.println(); // Optional spacing after the table
     }
 }
