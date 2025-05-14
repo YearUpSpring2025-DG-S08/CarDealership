@@ -90,7 +90,7 @@ public class Dealership {
         List<Vehicle> filteredVehicles = new ArrayList<>();
         
         for(Vehicle vehicle : inventory){
-            if(vehicle.getPrice() >= min && vehicle.getPrice() <= max){
+            if(vehicle.getYear() >= min && vehicle.getYear() <= max){
                 filteredVehicles.add(vehicle);
             }
         }
@@ -131,6 +131,7 @@ public class Dealership {
     }
     
     public List<Vehicle> getAllVehicles(){
+        
         return inventory;
     }
     
@@ -140,10 +141,14 @@ public class Dealership {
         fileManager.saveDealership(this);
     }
     
-    
     public void removeVehicle(Vehicle vehicle){
         // remove this vehicle from the inventory of the dealership
         inventory.remove(vehicle);
         fileManager.saveDealership(this);
     }
+    
+    // create a formatted print of the dealership information
+//    public String toString(){
+//        
+//    }
 }
