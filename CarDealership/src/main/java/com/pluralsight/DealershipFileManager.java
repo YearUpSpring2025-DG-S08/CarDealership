@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.*;
 import java.util.List;
+import static com.pluralsight.ColorCodes.*;
 
 public class DealershipFileManager {
     public static String filePath = "inventory.csv";
@@ -21,7 +22,7 @@ public class DealershipFileManager {
 
             Dealership dealership = new Dealership(dealershipName, dealershipAddress, dealershipPhoneNumber);
 
-//            reader.readLine(); // skips vehicle CSV header line
+
             
             String vehicleLines;
             while ((vehicleLines = reader.readLine()) != null) {
@@ -30,7 +31,7 @@ public class DealershipFileManager {
                 
                 String[] vehicleDetails = vehicleLines.split("\\|");
 //                 System.out.println("Split into " + vehicleDetails.length + " parts");
-                // determines what the String[] is being passed and determines how many splits of data
+//                 determines what the String[] is being passed and determines how many splits of data
                 if (vehicleDetails.length != 8) {
                     System.out.println("There are some vehicle details missing!");
                     continue;
@@ -39,13 +40,12 @@ public class DealershipFileManager {
                 try {
                     Vehicle newVehicle = getVehicle(vehicleDetails);
                     dealership.addVehicle(newVehicle);
-                    
                 } catch (Exception e) {
                     System.out.println("Could not add vehicles to inventory");
                 }
             }
             // after parsing the details, we return the new Dealership object
-            return dealership;
+            return printDealershipInfo(dealership);
             
         } catch (IOException e) {
             System.out.println("Could not read from file!");
@@ -101,7 +101,76 @@ public class DealershipFileManager {
         }
     }
     
-    public void loadDealership(){
+    public static Dealership printDealershipInfo(Dealership dealership) {
+        String name = dealership.getName();
+        String address = dealership.getAddress();
+        String phone = dealership.getPhoneNumber();
         
+        String border = "=".repeat(60);
+        
+        System.out.println(border);
+        // Each line is exactly 60 characters wide with formatting and background applied to the entire line
+        System.out.print(BLACK_BACKGROUND + YELLOW);
+        System.out.printf("  DEALERSHIP: %-47s", name);
+        System.out.println(RESET);
+        
+        System.out.print(BLACK_BACKGROUND + YELLOW);
+        System.out.printf("  Address:    %-47s", address);
+        System.out.println(RESET);
+        
+        System.out.print(BLACK_BACKGROUND + YELLOW);
+        System.out.printf("  Phone:      %-47s", phone);
+        System.out.println(RESET);
+        
+        System.out.println(border);
+        return dealership;
+    }
+    
+    public void printVehicleInventory(List<Vehicle> vehicles) {
+        if (vehicles == null || vehicles.isEmpty()) {
+            System.out.println("No vehicles in inventory \n");
+            return;
+        }
+        
+        String[] headers = { "VIN", "Year", "Make", "Model", "Type", "Color", "Mileage", "Price" };
+        int[] columnWidths = { 8, 6, 12, 14, 12, 10, 10, 12 };
+        
+        StringBuilder border = new StringBuilder();
+        for (int width : columnWidths) {
+            border.append("+").append("-".repeat(width));
+        }
+        border.append("+");
+        
+        // Print header
+        System.out.println(border);
+        System.out.print("|");
+        for (int i = 0; i < headers.length; i++) {
+            System.out.printf(" %-" + (columnWidths[i] - 2) + "s |", headers[i]);
+        }
+        System.out.println();
+        System.out.println(border);
+        
+        // Print vehicle rows
+        for (Vehicle v : vehicles) {
+            System.out.printf("| %-" + (columnWidths[0] - 2) + "d ", v.getVin());
+            System.out.printf("| %-" + (columnWidths[1] - 2) + "d ", v.getYear());
+            System.out.printf("| %-" + (columnWidths[2] - 2) + "s ", v.getMake());
+            System.out.printf("| %-" + (columnWidths[3] - 2) + "s ", v.getModel());
+            System.out.printf("| %-" + (columnWidths[4] - 2) + "s ", v.getType());
+            System.out.printf("| %-" + (columnWidths[5] - 2) + "s ", v.getColor());
+//            System.out.printf("| %-" + (columnWidths[6] - 2) + ".1f ", v.getMileage());
+//            System.out.printf("| $%-" + (columnWidths[7] - 3) + ".2f |\n", v.getPrice());
+            
+            
+            // Format mileage as integer with commas
+            String mileageFormatted = String.format("%,d", (int) v.getMileage());
+            System.out.printf("| %" + (columnWidths[6] - 2) + "s ", mileageFormatted);
+            
+            // Format price as $#,###.##
+            String priceFormatted = String.format("$%,.2f", v.getPrice());
+            System.out.printf("| %" + (columnWidths[7] - 2) + "s |\n", priceFormatted);
+        }
+        
+        System.out.println(border);
     }
 }

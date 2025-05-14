@@ -86,11 +86,24 @@ public class Vehicle {
         this.type = type;
     }
 
-    // create a formatted print to console method for easier readability for the user
-
+//     create a formatted print of vehicle information 
     @Override
     public String toString() {
-        return String.format("%d|%s|%s|%s|%s|%s|%.0f|$%.0f"
+        String header = StyledUI.FormattedTextHeader();
+        String data = String.format("%d|%s|%s|%s|%s|%s|%.0f|$%.0f"
                 , vin, year, make, model, type, color, mileage, price);
+        return header + "\n" + data + "\n";
+    }
+    
+    public String toFormattedRow() {
+        return String.format("%-8d | %-6d | %-12s | %-14s | %-12s | %-10s | %10s | %12s", 
+                vin,
+                year,
+                make,
+                model,
+                type,
+                color,
+        String.format("%,d", (int) mileage),
+        String.format("$%,.2f", price));
     }
 }
