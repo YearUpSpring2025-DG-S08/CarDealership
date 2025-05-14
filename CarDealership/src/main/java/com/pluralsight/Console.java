@@ -51,4 +51,8 @@ public class Console {
             }
         }
     }
+    
+    public void clearScanner(){ // clears bad input from buffer (useful for promptForInt and promptForDouble usage
+        scanner.nextLine();
+    }
 }
