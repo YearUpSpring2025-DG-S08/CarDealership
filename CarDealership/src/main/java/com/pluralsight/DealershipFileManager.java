@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.*;
 import java.util.List;
+
 import static com.pluralsight.ColorCodes.*;
 
 public class DealershipFileManager {
@@ -11,18 +12,18 @@ public class DealershipFileManager {
         // get dealership details from csv file
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String details = reader.readLine();
-
+            
             // after reading a line from the file, we want to parse the information
             // this information will be saved to the new Dealership object
             String[] dealershipDetails = details.split("\\|");
-
+            
             String dealershipName = dealershipDetails[0];
             String dealershipAddress = dealershipDetails[1];
             String dealershipPhoneNumber = dealershipDetails[2];
-
+            
             Dealership dealership = new Dealership(dealershipName, dealershipAddress, dealershipPhoneNumber);
-
-
+            
+            
             
             String vehicleLines;
             while ((vehicleLines = reader.readLine()) != null) {
@@ -36,7 +37,7 @@ public class DealershipFileManager {
                     System.out.println("There are some vehicle details missing!");
                     continue;
                 }
-
+                
                 try {
                     Vehicle newVehicle = getVehicle(vehicleDetails);
                     dealership.addVehicle(newVehicle);
@@ -52,7 +53,7 @@ public class DealershipFileManager {
             throw new RuntimeException(e);
         }
     }
-
+    
     // extrapolated a getVehicle method to parse the details and return a Vehicle object
     public static Vehicle getVehicle(String[] vehicleDetails) {
         try {
@@ -73,14 +74,14 @@ public class DealershipFileManager {
     }
     
     public void saveDealership(Dealership dealership){
-    // for every add or removal of a vehicle
-    // this method will be called to save this new information to the csv file
+        // for every add or removal of a vehicle
+        // this method will be called to save this new information to the csv file
         // need this line of code to write this information into the csv file
-        // this would include the information added or removed from the corresponding methods 
+        // this would include the information added or removed from the corresponding methods
         List<Vehicle> inventory = dealership.getAllVehicles();
-        // logic: because the addVehicle() and the removeVehicle() change the 
-
-
+        // logic: because the addVehicle() and the removeVehicle() change the
+        
+        
         try(PrintWriter writer = new PrintWriter(new FileWriter(filePath, false))){
             // creates the dealership information line
             writer.printf("%s|%s|%s", dealership.getName(), dealership.getAddress(), dealership.getPhoneNumber());
@@ -132,45 +133,14 @@ public class DealershipFileManager {
             return;
         }
         
-        String[] headers = { "VIN", "Year", "Make", "Model", "Type", "Color", "Mileage", "Price" };
-        int[] columnWidths = { 8, 6, 12, 14, 12, 10, 10, 12 };
+        // Print styled header
+        System.out.println(StyledUI.FormattedTextHeader());
         
-        StringBuilder border = new StringBuilder();
-        for (int width : columnWidths) {
-            border.append("+").append("-".repeat(width));
-        }
-        border.append("+");
-        
-        // Print header
-        System.out.println(border);
-        System.out.print("|");
-        for (int i = 0; i < headers.length; i++) {
-            System.out.printf(" %-" + (columnWidths[i] - 2) + "s |", headers[i]);
-        }
-        System.out.println();
-        System.out.println(border);
-        
-        // Print vehicle rows
+        // Print each vehicle using the Vehicle's toFormattedRow() method
         for (Vehicle v : vehicles) {
-            System.out.printf("| %-" + (columnWidths[0] - 2) + "d ", v.getVin());
-            System.out.printf("| %-" + (columnWidths[1] - 2) + "d ", v.getYear());
-            System.out.printf("| %-" + (columnWidths[2] - 2) + "s ", v.getMake());
-            System.out.printf("| %-" + (columnWidths[3] - 2) + "s ", v.getModel());
-            System.out.printf("| %-" + (columnWidths[4] - 2) + "s ", v.getType());
-            System.out.printf("| %-" + (columnWidths[5] - 2) + "s ", v.getColor());
-//            System.out.printf("| %-" + (columnWidths[6] - 2) + ".1f ", v.getMileage());
-//            System.out.printf("| $%-" + (columnWidths[7] - 3) + ".2f |\n", v.getPrice());
-            
-            
-            // Format mileage as integer with commas
-            String mileageFormatted = String.format("%,d", (int) v.getMileage());
-            System.out.printf("| %" + (columnWidths[6] - 2) + "s ", mileageFormatted);
-            
-            // Format price as $#,###.##
-            String priceFormatted = String.format("$%,.2f", v.getPrice());
-            System.out.printf("| %" + (columnWidths[7] - 2) + "s |\n", priceFormatted);
+            System.out.println(v.toFormattedRow());
         }
         
-        System.out.println(border);
+        System.out.println(); // Optional spacing after the table
     }
 }
