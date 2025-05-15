@@ -146,9 +146,4 @@ public class Dealership {
         inventory.remove(vehicle);
         fileManager.saveDealership(this);
     }
-    
-    // create a formatted print of the dealership information
-//    public String toString(){
-//        
-//    }
 }
