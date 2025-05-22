@@ -79,10 +79,10 @@ public class DealershipFileManager {
         // need this line of code to write this information into the csv file
         // this would include the information added or removed from the corresponding methods
         List<Vehicle> inventory = dealership.getAllVehicles();
-        // logic: because the addVehicle() and the removeVehicle() change the
+        // logic: because the addVehicle() and the removeVehicle() change the inventory
         
         
-        try(PrintWriter writer = new PrintWriter(new FileWriter(filePath, false))){
+        try(PrintWriter writer = new PrintWriter(filePath)){
             // creates the dealership information line
             writer.printf("%s|%s|%s", dealership.getName(), dealership.getAddress(), dealership.getPhoneNumber());
             

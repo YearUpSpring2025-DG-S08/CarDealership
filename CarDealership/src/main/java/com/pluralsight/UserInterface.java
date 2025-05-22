@@ -49,8 +49,6 @@ public class UserInterface {
                     [7] Search All Vehicles
                     [8] Add Vehicle to lot
                     [9] Remove Vehicle from lot
-                    [10] Sell a Vehicle
-                    [11] Lease a Vehicle
                     """;
 
             input = console.promptForInt(welcomeMenuPrompt);
